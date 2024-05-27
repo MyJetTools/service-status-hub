@@ -6,8 +6,6 @@ use crate::app_ctx::AppContext;
 
 use my_http_server::macros::*;
 
-use super::models::ServicesStatusResponse;
-
 #[http_route(
     method: "GET",
     route: "/api/status",
