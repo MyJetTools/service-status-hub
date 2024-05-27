@@ -27,7 +27,7 @@ var HtmlMain = /** @class */ (function () {
             for (var _d = 0, _e = Object.keys(appIds); _d < _e.length; _d++) {
                 var appId = _e[_d];
                 var envs = appIds[appId];
-                var warning = "";
+                var warning = "<img src=\"/img/env.png\" style=\"width:16px\"/>";
                 var prevVersion = "";
                 for (var _f = 0, _g = Object.keys(envs); _f < _g.length; _f++) {
                     var env = _g[_f];
@@ -53,7 +53,7 @@ var HtmlMain = /** @class */ (function () {
                     if (service.git_hub_version != service.version || service.to_release_version != service.version) {
                         releaseColor = "red";
                     }
-                    var git_hub_version = "<div><img src=\"/img/github.svg\" style=\"width:16px; height:16px\"/>".concat(service.git_hub_version, "</div><div><img src=\"/img/release.svg\" style=\"width:16px; height:16px\"/>").concat(service.to_release_version, "</div>");
+                    var git_hub_version = "<div><img src=\"/img/release.svg\" style=\"width:16px; height:16px\"/>".concat(service.to_release_version, "</div><div><img src=\"/img/github.svg\" style=\"width:16px; height:16px\"/>").concat(service.git_hub_version, "</div>");
                     if (service.lastOk >= 5) {
                         ok += '<tr style="background:red">' +
                             '<td>' + serviceIdToPrint + '</td>' +

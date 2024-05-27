@@ -37,7 +37,7 @@ class HtmlMain {
             for (let appId of Object.keys(appIds)) {
                 let envs = appIds[appId];
 
-                let warning = ``;
+                let warning = `<img src="/img/env.png" style="width:16px"/>`;
 
                 let prevVersion = "";
 
@@ -75,7 +75,7 @@ class HtmlMain {
                         releaseColor = "red";
                     }
 
-                    let git_hub_version = `<div><img src="/img/github.svg" style="width:16px; height:16px"/>${service.git_hub_version}</div><div><img src="/img/release.svg" style="width:16px; height:16px"/>${service.to_release_version}</div>`;
+                    let git_hub_version = `<div><img src="/img/release.svg" style="width:16px; height:16px"/>${service.to_release_version}</div><div><img src="/img/github.svg" style="width:16px; height:16px"/>${service.git_hub_version}</div>`;
 
                     if (service.lastOk >= 5) {
 
