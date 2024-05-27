@@ -15,7 +15,7 @@ use super::models::ServicesStatusResponse;
     description: "Get Services Status",
     summary: "Returns Services Status",
     result:[
-        {status_code: 200, description: "Rows", model: "ServicesStatusResponse"},
+        {status_code: 200, description: "Rows"},
     ]
 )]
 pub struct GetStatusAction {
