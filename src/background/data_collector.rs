@@ -105,7 +105,7 @@ async fn get_ok_result(
 
     if let Err(err) = result {
         return Err(format!(
-            "Can not deserialize into api/islive model: {:?}",
+            "Can not deserialize into api/isalive model: {:?}",
             err
         ));
     }
@@ -113,7 +113,7 @@ async fn get_ok_result(
     Ok(result.unwrap().services)
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, my_http_server::macros::MyHttpObjectStructure)]
 pub struct ServiceModel {
     pub id: String,
     pub name: Option<String>,
