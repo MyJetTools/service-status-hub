@@ -120,6 +120,8 @@ pub struct ServiceModel {
 
     pub url: Option<String>,
     pub version: Option<String>,
+    pub git_hub_version: Option<String>,
+    pub to_release_version: Option<String>,
     #[serde(rename = "lastOk")]
     pub last_ok: Option<i64>,
     #[serde(rename = "lastError")]

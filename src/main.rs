@@ -7,6 +7,7 @@ mod app_ctx;
 mod background;
 mod http;
 
+mod flows;
 mod settings;
 
 #[tokio::main]

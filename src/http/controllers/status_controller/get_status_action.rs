@@ -31,10 +31,6 @@ async fn handle_request(
     action: &GetStatusAction,
     _ctx: &HttpContext,
 ) -> Result<HttpOkResult, HttpFailResult> {
-    let response: ServicesStatusResponse = {
-        let read_access = action.app.response.lock().await;
-        read_access.clone()
-    };
-
+    let response = crate::flows::get_git_hub_releases(&action.app).await;
     return HttpOutput::as_json(response).into_ok_result(true).into();
 }
