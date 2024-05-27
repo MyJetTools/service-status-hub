@@ -20,7 +20,7 @@ async fn main() {
 
     let app = Arc::new(app);
 
-    let mut http_server = http::start_up::setup_server(&app, 8000);
+    let mut http_server = http::start_up::setup_server(&app, 8005);
 
     http_server.start(app.app_states.clone(), my_logger::LOGGER.clone());
 

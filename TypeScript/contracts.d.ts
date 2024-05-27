@@ -6,7 +6,9 @@ interface IStatusContract {
 interface IServiceStatus {
     id: string;
     name: string;
-    version: string
+    version: string;
+    git_hub_version: string;
+    to_release_version: string;
     url: string,
     lastOk: number,
     lastError: string,

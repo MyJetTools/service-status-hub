@@ -49,13 +49,18 @@ var HtmlMain = /** @class */ (function () {
                         serviceIdToPrint = service.id;
                         prevId = service.id;
                     }
+                    var releaseColor = "black";
+                    if (service.git_hub_version != service.version || service.to_release_version != service.version) {
+                        releaseColor = "red";
+                    }
+                    var git_hub_version = "<div><img src=\"/img/github.svg\" style=\"width:16px; height:16px\"/>".concat(service.git_hub_version, "</div><div><img src=\"/img/release.svg\" style=\"width:16px; height:16px\"/>").concat(service.to_release_version, "</div>");
                     if (service.lastOk >= 5) {
                         ok += '<tr style="background:red">' +
                             '<td>' + serviceIdToPrint + '</td>' +
                             '<td>' + env + '</td>' +
                             '<td>' + service.name + '</td>' +
-                            '<td>' + warning + service.version + '</td>' +
-                            '<td><div>' + service.url + '</div><div> Started: ' + started + '</div></td>' +
+                            "<td style=\"color:".concat(releaseColor, "\">") + warning + service.version + git_hub_version + '</td>' +
+                            "<td><div>" + service.url + '</div><div> Started: ' + started + '</div></td>' +
                             '<td>' + service.envInfo + '</td>' +
                             '<td>' + service.lastOk + ' sec ago</td>' +
                             '<td>' + service.lastError + '</td>' +
@@ -67,7 +72,7 @@ var HtmlMain = /** @class */ (function () {
                             '<td>' + serviceIdToPrint + '</td>' +
                             '<td>' + env + '</td>' +
                             '<td>' + service.name + '</td>' +
-                            '<td>' + warning + service.version + '</td>' +
+                            "<td style=\"color:".concat(releaseColor, "\">") + warning + service.version + git_hub_version + '</td>' +
                             '<td><div>' + service.url + '</div><div> Started: ' + started + '</div></td>' +
                             '<td>' + service.envInfo + '</td>' +
                             '<td>' + service.lastOk + ' sec ago</td>' +
