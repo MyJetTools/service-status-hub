@@ -1,7 +1,8 @@
 class HtmlMain {
     static layout() {
         return '<div id="main"></div>' +
-            HtmlStatusBar.layout();
+            HtmlStatusBar.layout() +
+            `<div id="header"><input class="form-control" style="width:400px" oninput="AppContext.onFilterChange(this)"/></div>`;
     }
     static generateContent(status) {
         let prevId = "";
@@ -18,15 +19,37 @@ class HtmlMain {
         let servicesCount = 0;
         let versionsToBeUpdated = 0;
         for (let domain of Object.keys(status.ok)) {
+            let appIds = status.ok[domain];
+            if (!AppContext.filterIsDisabled()) {
+                let everythingIsFiltered = true;
+                for (let appId of Object.keys(appIds)) {
+                    let envs = appIds[appId];
+                    for (let env of Object.keys(envs)) {
+                        let service = envs[env];
+                        if (AppContext.showItem(service)) {
+                            everythingIsFiltered = false;
+                            break;
+                        }
+                    }
+                    if (!everythingIsFiltered) {
+                        break;
+                    }
+                }
+                if (everythingIsFiltered) {
+                    continue;
+                }
+            }
             ok += '<tr><td colspan="9"><h2>' + domain + '</h2></td>' +
                 '</tr>';
-            let appIds = status.ok[domain];
             for (let appId of Object.keys(appIds)) {
                 let envs = appIds[appId];
                 let warning = `<img src="/img/env.png" style="width:16px"/>`;
                 let prevVersion = "";
                 for (let env of Object.keys(envs)) {
                     let service = envs[env];
+                    if (!AppContext.showItem(service)) {
+                        continue;
+                    }
                     if (prevVersion == "") {
                         prevVersion = service.version;
                     }

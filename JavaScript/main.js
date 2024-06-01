@@ -1,4 +1,19 @@
-class main {
+class AppContext {
+    static filterIsDisabled() {
+        return this.filterString == "";
+    }
+    static showItem(item) {
+        if (this.filterIsDisabled()) {
+            return true;
+        }
+        if (item.id.toLocaleLowerCase().includes(this.filterString)) {
+            return true;
+        }
+        return false;
+    }
+    static onFilterChange(element) {
+        AppContext.filterString = element.value.toLowerCase();
+    }
     static resize() {
         let height = window.innerHeight;
         let width = window.innerWidth;
@@ -35,7 +50,8 @@ class main {
         });
     }
 }
-main.requested = false;
-main.statusBarHeight = 24;
-window.setInterval(() => main.background(), 1000);
+AppContext.filterString = "";
+AppContext.requested = false;
+AppContext.statusBarHeight = 24;
+window.setInterval(() => AppContext.background(), 1000);
 //# sourceMappingURL=main.js.map

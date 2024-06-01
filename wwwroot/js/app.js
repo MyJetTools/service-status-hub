@@ -16,7 +16,8 @@ class HtmlStaticElement {
 class HtmlMain {
     static layout() {
         return '<div id="main"></div>' +
-            HtmlStatusBar.layout();
+            HtmlStatusBar.layout() +
+            `<div id="header"><input class="form-control" style="width:400px" oninput="AppContext.onFilterChange(this)"/></div>`;
     }
     static generateContent(status) {
         let prevId = "";
@@ -33,15 +34,37 @@ class HtmlMain {
         let servicesCount = 0;
         let versionsToBeUpdated = 0;
         for (let domain of Object.keys(status.ok)) {
+            let appIds = status.ok[domain];
+            if (!AppContext.filterIsDisabled()) {
+                let everythingIsFiltered = true;
+                for (let appId of Object.keys(appIds)) {
+                    let envs = appIds[appId];
+                    for (let env of Object.keys(envs)) {
+                        let service = envs[env];
+                        if (AppContext.showItem(service)) {
+                            everythingIsFiltered = false;
+                            break;
+                        }
+                    }
+                    if (!everythingIsFiltered) {
+                        break;
+                    }
+                }
+                if (everythingIsFiltered) {
+                    continue;
+                }
+            }
             ok += '<tr><td colspan="9"><h2>' + domain + '</h2></td>' +
                 '</tr>';
-            let appIds = status.ok[domain];
             for (let appId of Object.keys(appIds)) {
                 let envs = appIds[appId];
                 let warning = `<img src="/img/env.png" style="width:16px"/>`;
                 let prevVersion = "";
                 for (let env of Object.keys(envs)) {
                     let service = envs[env];
+                    if (!AppContext.showItem(service)) {
+                        continue;
+                    }
                     if (prevVersion == "") {
                         prevVersion = service.version;
                     }
@@ -116,15 +139,15 @@ class HtmlStatusBar {
         return this.servicesAmount;
     }
     static getVersionsToBeUpdate() {
-        if (this.servicesAmount === undefined) {
-            this.servicesAmount = new HtmlStaticElement(document.getElementById('versions-to-be-updated'), (value) => {
+        if (this.versionsToBeUpdated === undefined) {
+            this.versionsToBeUpdated = new HtmlStaticElement(document.getElementById('versions-to-be-updated'), (value) => {
                 if (value == 0) {
                     return value.toFixed(0);
                 }
                 return `<span style="color:red">${value.toFixed(0)}</span>`;
             });
         }
-        return this.servicesAmount;
+        return this.versionsToBeUpdated;
     }
     static layout() {
         return '<div id="status-bar">' +
@@ -152,7 +175,22 @@ class HtmlStatusBar {
 }
 
 // main.js
-class main {
+class AppContext {
+    static filterIsDisabled() {
+        return this.filterString == "";
+    }
+    static showItem(item) {
+        if (this.filterIsDisabled()) {
+            return true;
+        }
+        if (item.id.toLocaleLowerCase().includes(this.filterString)) {
+            return true;
+        }
+        return false;
+    }
+    static onFilterChange(element) {
+        AppContext.filterString = element.value.toLowerCase();
+    }
     static resize() {
         let height = window.innerHeight;
         let width = window.innerWidth;
@@ -189,7 +227,8 @@ class main {
         });
     }
 }
-main.requested = false;
-main.statusBarHeight = 24;
-window.setInterval(() => main.background(), 1000);
+AppContext.filterString = "";
+AppContext.requested = false;
+AppContext.statusBarHeight = 24;
+window.setInterval(() => AppContext.background(), 1000);
 

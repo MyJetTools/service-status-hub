@@ -1,27 +1,44 @@
-#main{
-    position:absolute; 
-    overflow-y: auto; 
-    overflow-x: hidden;  
+body {
+    --header-height: 40px;
+    overflow-y: hidden;
 }
 
-#status-bar{
+#main {
+    padding-top: var(--header-height);
+    position: absolute;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#status-bar {
     background: lightgray;
     box-shadow: 0 0 5px lightgray;
     position: absolute;
 }
 
-#dialog{
+#dialog {
     visibility: hidden;
     position: absolute;
     overflow-y: auto;
     overflow-x: hidden;
 }
 
-.statusbar-separator{
+.statusbar-separator {
     width: 2px;
     height: 20px;
     border-left: solid 1px gray;
     margin-top: 2px;
     margin-left: 4px;
     margin-right: 4px;
+}
+
+#header {
+    height: var(--header-height);
+    background-color: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    width: 100%;
+    box-shadow: 0 0 5px lightgray;
 }

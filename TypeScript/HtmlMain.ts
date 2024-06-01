@@ -1,7 +1,8 @@
 class HtmlMain {
     public static layout(): string {
         return '<div id="main"></div>' +
-            HtmlStatusBar.layout();
+            HtmlStatusBar.layout() +
+            `<div id="header"><input class="form-control" style="width:400px" oninput="AppContext.onFilterChange(this)"/></div>`;
     }
 
 
@@ -18,7 +19,7 @@ class HtmlMain {
         result += '<table class="table table-striped">' +
             '<thead><tr><th>Id</th><th>Env</th><th>Name</th><th>Version</th><th>Url</th><th>EnvInfo</th><th>Last Ok Ping</th><th>LastError</th><th>Last ping duration</th></tr></thead>' +
             '<tbody>';
-        let tableBottom = '</tbody></table>'
+        let tableBottom = '</tbody></table>';
         let ok = "";
 
         let servicesCount = 0
@@ -29,10 +30,37 @@ class HtmlMain {
 
         for (let domain of Object.keys(status.ok)) {
 
+            let appIds = status.ok[domain];
+
+
+            if (!AppContext.filterIsDisabled()) {
+
+                let everythingIsFiltered = true;
+                for (let appId of Object.keys(appIds)) {
+                    let envs = appIds[appId];
+                    for (let env of Object.keys(envs)) {
+                        let service: IServiceStatus = envs[env];
+
+                        if (AppContext.showItem(service)) {
+                            everythingIsFiltered = false;
+                            break;
+                        }
+                    }
+                    if (!everythingIsFiltered) {
+                        break;
+                    }
+                }
+
+                if (everythingIsFiltered) {
+                    continue;
+                }
+            }
+
+
+
             ok += '<tr><td colspan="9"><h2>' + domain + '</h2></td>' +
                 '</tr>';
 
-            let appIds = status.ok[domain];
 
 
 
@@ -47,6 +75,10 @@ class HtmlMain {
                 for (let env of Object.keys(envs)) {
 
                     let service: IServiceStatus = envs[env];
+
+                    if (!AppContext.showItem(service)) {
+                        continue;
+                    }
 
                     if (prevVersion == "") {
                         prevVersion = service.version;
@@ -125,3 +157,5 @@ class HtmlMain {
         return result + ok + tableBottom;
     }
 }
+
+

@@ -12,15 +12,15 @@ class HtmlStatusBar {
         return this.servicesAmount;
     }
     static getVersionsToBeUpdate() {
-        if (this.servicesAmount === undefined) {
-            this.servicesAmount = new HtmlStaticElement(document.getElementById('versions-to-be-updated'), (value) => {
+        if (this.versionsToBeUpdated === undefined) {
+            this.versionsToBeUpdated = new HtmlStaticElement(document.getElementById('versions-to-be-updated'), (value) => {
                 if (value == 0) {
                     return value.toFixed(0);
                 }
                 return `<span style="color:red">${value.toFixed(0)}</span>`;
             });
         }
-        return this.servicesAmount;
+        return this.versionsToBeUpdated;
     }
     static layout() {
         return '<div id="status-bar">' +

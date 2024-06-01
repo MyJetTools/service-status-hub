@@ -1,4 +1,6 @@
-class main {
+class AppContext {
+
+    public static filterString = "";
 
     private static body: HTMLElement;
     private static layoutElement: HTMLElement;
@@ -13,12 +15,33 @@ class main {
     private static statusBarHeight = 24;
 
 
+    static filterIsDisabled(): boolean {
+        return this.filterString == "";
+    }
+
+    static showItem(item: IServiceStatus): boolean {
+
+        if (this.filterIsDisabled()) {
+            return true;
+        }
+
+        if (item.id.toLocaleLowerCase().includes(this.filterString)) {
+            return true;
+        }
+
+        return false;
+
+    }
+
+    static onFilterChange(element: HTMLInputElement) {
+        AppContext.filterString = element.value.toLowerCase();
+    }
+
 
     static resize() {
 
         let height = window.innerHeight;
         let width = window.innerWidth;
-
 
         if (this.windowHeight == height && this.windowWidth == width)
             return;
@@ -74,6 +97,7 @@ class main {
             })
 
     }
+
 }
 
-window.setInterval(() => main.background(), 1000);
+window.setInterval(() => AppContext.background(), 1000);
