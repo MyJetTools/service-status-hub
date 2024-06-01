@@ -18,10 +18,13 @@ class HtmlMain {
         result += '<table class="table table-striped">' +
             '<thead><tr><th>Id</th><th>Env</th><th>Name</th><th>Version</th><th>Url</th><th>EnvInfo</th><th>Last Ok Ping</th><th>LastError</th><th>Last ping duration</th></tr></thead>' +
             '<tbody>';
-        let tableBottop = '</tbody></table>'
+        let tableBottom = '</tbody></table>'
         let ok = "";
 
         let servicesCount = 0
+
+
+        let versionsToBeUpdated = 0;
 
 
         for (let domain of Object.keys(status.ok)) {
@@ -73,6 +76,7 @@ class HtmlMain {
 
                     if (service.git_hub_version != service.version || service.to_release_version != service.version) {
                         releaseColor = "red";
+                        versionsToBeUpdated++;
                     }
 
                     let git_hub_version = `<div><img src="/img/release.svg" style="width:16px; height:16px"/>${service.to_release_version}</div><div><img src="/img/github.svg" style="width:16px; height:16px"/>${service.git_hub_version}</div>`;
@@ -110,24 +114,14 @@ class HtmlMain {
 
                     servicesCount++;
 
-
                 }
-
-
 
             }
 
         }
 
-
-
-
-
-
-
-
-
         HtmlStatusBar.updateServicesAmount(servicesCount);
-        return result + ok + tableBottop;
+        HtmlStatusBar.updateVersionsToBeUpdated(versionsToBeUpdated);
+        return result + ok + tableBottom;
     }
 }

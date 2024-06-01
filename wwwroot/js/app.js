@@ -1,7 +1,195 @@
-eval(function(p,a,c,k,e,d){e=function(c){return c.toString(36)};if(!''.replace(/^/,String)){while(c--)d[c.toString(a)]=k[c]||c.toString(a);k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('c 2=(5(){5 2(4,3){1.4=4;1.3=3}2.b.a=5(0){9(1.0===8||1.0!=0){1.0=0;1.4.7=1.3(0)}};6 2}());',13,13,'value|this|HtmlStaticElement|toString|el|function|return|innerHTML|undefined|if|update|prototype|var'.split('|'),0,{}))
+// HtmlValue.js
+class HtmlStaticElement {
+    constructor(el, toString) {
+        this.el = el;
+        this.toString = toString;
+    }
+    update(value) {
+        if (this.value === undefined || this.value != value) {
+            this.value = value;
+            this.el.innerHTML = this.toString(value);
+        }
+    }
+}
 
-eval(function(p,a,c,k,e,d){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)d[e(c)]=k[c]||e(c);k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('3 g=(C(){C g(){}g.1e=C(){D\'<6 r="1E"></6>\'+S.1e()};g.1D=C(l){3 I="";3 m="";x(3 B=0,Q=w.v(l.1d);B<Q.u;B++){3 P=Q[B];3 1c=l.1d[P];m+="<1b 8=\\"G:H;\\">".e(P,":").e(1c,"</1b>")}m+=\'<A 1C="A A-1B">\'+\'<19><7><4>1A</4><4>1z</4><4>1y</4><4>1x</4><4>1w</4><4>1v</4><4>1a 1u 1t</4><4>1s</4><4>1a 1r 1q</4></7></19>\'+\'<18>\';3 R=\'</18></A>\';3 b="";3 E=0;x(3 z=0,O=w.v(l.b);z<O.u;z++){3 N=O[z];b+=\'<7><1 1p="9"><17>\'+N+\'</17></1>\'+\'</7>\';3 L=l.b[N];x(3 y=0,M=w.v(L);y<M.u;y++){3 16=M[y];3 J=L[16];3 i="<a q=\\"/a/j.15\\" 8=\\"p:k\\"/>";3 s="";x(3 t=0,K=w.v(J);t<K.u;t++){3 j=K[t];3 2=J[j];f(s==""){s=2.d}11{f(s!=2.d){i="<a q=\\"/a/i.15\\" 8=\\"p:1o\\"/>"}}3 c="???";f(2.c){c=1n 1m(2.c/1l).1k()}3 o="";f(I!=2.r){o=2.r;I=2.r}3 n="1j";f(2.h!=2.d||2.14!=2.d){n="H"}3 h="<6><a q=\\"/a/1i.13\\" 8=\\"p:k; 12:k\\"/>".e(2.14,"</6><6><a q=\\"/a/1h.13\\" 8=\\"p:k; 12:k\\"/>").e(2.h,"</6>");f(2.F>=5){b+=\'<7 8="1g:H">\'+\'<1>\'+o+\'</1>\'+\'<1>\'+j+\'</1>\'+\'<1>\'+2.10+\'</1>\'+"<1 8=\\"G:".e(n,"\\">")+i+2.d+h+\'</1>\'+"<1><6>"+2.Z+\'</6><6> Y: \'+c+\'</6></1>\'+\'<1>\'+2.X+\'</1>\'+\'<1>\'+2.F+\' W V</1>\'+\'<1>\'+2.U+\'</1>\'+\'<1>\'+2.T+\'</1>\'+\'</7>\'}11{b+=\'<7>\'+\'<1>\'+o+\'</1>\'+\'<1>\'+j+\'</1>\'+\'<1>\'+2.10+\'</1>\'+"<1 8=\\"G:".e(n,"\\">")+i+2.d+h+\'</1>\'+\'<1><6>\'+2.Z+\'</6><6> Y: \'+c+\'</6></1>\'+\'<1>\'+2.X+\'</1>\'+\'<1>\'+2.F+\' W V</1>\'+\'<1>\'+2.U+\'</1>\'+\'<1>\'+2.T+\'</1>\'+\'</7>\'}E++}}}S.1f(E);D m+b+R};D g}());',62,103,'|td|service|var|th||div|tr|style||img|ok|started|version|concat|if|HtmlMain|git_hub_version|warning|env|16px|status|result|releaseColor|serviceIdToPrint|width|src|id|prevVersion|_f|length|keys|Object|for|_d|_b|table|_i|function|return|servicesCount|lastOk|color|red|prevId|envs|_g|appIds|_e|domain|_c|key|_a|tableBottop|HtmlStatusBar|lastPingDuration|lastError|ago|sec|envInfo|Started|url|name|else|height|svg|to_release_version|png|appId|h2|tbody|thead|Last|h1|value|err|layout|updateServicesAmount|background|github|release|black|toLocaleString|1000|Date|new|24px|colspan|duration|ping|LastError|Ping|Ok|EnvInfo|Url|Version|Name|Env|Id|striped|class|generateContent|main'.split('|'),0,{}))
+// HtmlMain.js
+class HtmlMain {
+    static layout() {
+        return '<div id="main"></div>' +
+            HtmlStatusBar.layout();
+    }
+    static generateContent(status) {
+        let prevId = "";
+        let result = "";
+        for (let key of Object.keys(status.err)) {
+            let value = status.err[key];
+            result += `<h1 style="color:red;">${key}:${value}</h1>`;
+        }
+        result += '<table class="table table-striped">' +
+            '<thead><tr><th>Id</th><th>Env</th><th>Name</th><th>Version</th><th>Url</th><th>EnvInfo</th><th>Last Ok Ping</th><th>LastError</th><th>Last ping duration</th></tr></thead>' +
+            '<tbody>';
+        let tableBottom = '</tbody></table>';
+        let ok = "";
+        let servicesCount = 0;
+        let versionsToBeUpdated = 0;
+        for (let domain of Object.keys(status.ok)) {
+            ok += '<tr><td colspan="9"><h2>' + domain + '</h2></td>' +
+                '</tr>';
+            let appIds = status.ok[domain];
+            for (let appId of Object.keys(appIds)) {
+                let envs = appIds[appId];
+                let warning = `<img src="/img/env.png" style="width:16px"/>`;
+                let prevVersion = "";
+                for (let env of Object.keys(envs)) {
+                    let service = envs[env];
+                    if (prevVersion == "") {
+                        prevVersion = service.version;
+                    }
+                    else {
+                        if (prevVersion != service.version) {
+                            warning = `<img src="/img/warning.png" style="width:24px"/>`;
+                        }
+                    }
+                    let started = "???";
+                    if (service.started) {
+                        started = new Date(service.started / 1000).toLocaleString();
+                    }
+                    let serviceIdToPrint = "";
+                    if (prevId != service.id) {
+                        serviceIdToPrint = service.id;
+                        prevId = service.id;
+                    }
+                    let releaseColor = "black";
+                    if (service.git_hub_version != service.version || service.to_release_version != service.version) {
+                        releaseColor = "red";
+                        versionsToBeUpdated++;
+                    }
+                    let git_hub_version = `<div><img src="/img/release.svg" style="width:16px; height:16px"/>${service.to_release_version}</div><div><img src="/img/github.svg" style="width:16px; height:16px"/>${service.git_hub_version}</div>`;
+                    if (service.lastOk >= 5) {
+                        ok += '<tr style="background:red">' +
+                            '<td>' + serviceIdToPrint + '</td>' +
+                            '<td>' + env + '</td>' +
+                            '<td>' + service.name + '</td>' +
+                            `<td style="color:${releaseColor}">` + warning + service.version + git_hub_version + '</td>' +
+                            `<td><div>` + service.url + '</div><div> Started: ' + started + '</div></td>' +
+                            '<td>' + service.envInfo + '</td>' +
+                            '<td>' + service.lastOk + ' sec ago</td>' +
+                            '<td>' + service.lastError + '</td>' +
+                            '<td>' + service.lastPingDuration + '</td>' +
+                            '</tr>';
+                    }
+                    else {
+                        ok += '<tr>' +
+                            '<td>' + serviceIdToPrint + '</td>' +
+                            '<td>' + env + '</td>' +
+                            '<td>' + service.name + '</td>' +
+                            `<td style="color:${releaseColor}">` + warning + service.version + git_hub_version + '</td>' +
+                            '<td><div>' + service.url + '</div><div> Started: ' + started + '</div></td>' +
+                            '<td>' + service.envInfo + '</td>' +
+                            '<td>' + service.lastOk + ' sec ago</td>' +
+                            '<td>' + service.lastError + '</td>' +
+                            '<td>' + service.lastPingDuration + '</td>' +
+                            '</tr>';
+                    }
+                    servicesCount++;
+                }
+            }
+        }
+        HtmlStatusBar.updateServicesAmount(servicesCount);
+        HtmlStatusBar.updateVersionsToBeUpdated(versionsToBeUpdated);
+        return result + ok + tableBottom;
+    }
+}
 
-eval(function(p,a,c,k,e,d){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)d[e(c)]=k[c]||e(c);k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('S 2=(1(){1 2(){}2.d=1(){x(3.9===w){3.9=v u(t.s(\'9\'),1(6){5 6?\'<a 8="y:R">r</a>\':\'<a 8="y:Q">P</a>\'})}5 3.9};2.g=1(){x(3.f===w){3.f=v u(t.s(\'q-p\'),1(6){5 6.O(0)})}5 3.f};2.N=1(){5\'<7 e="M-L">\'+\'<h><i>\'+\'<4 8="K-J: I">r: <b e="9" 8="o-n: 0 0 H m;"></b></4>\'+\'<4><7 l="k-j"></7></4>\'+\'<4>G F: <b e="q-p" 8="o-n: 0 0 E m;"></b></4>\'+\'<4><7 l="k-j"></7></4>\'+\'</i></h></7>\'};2.D=1(6){3.g().c(6)};2.C=1(){3.d().c(B)};2.A=1(){3.d().c(z)};5 2}());',55,55,'|function|HtmlStatusBar|this|td|return|value|div|style|connected|span||update|getConntected|id|servicesAmount|getServicesAmount|table|tr|separator|statusbar|class|white|shadow|text|amount|services|Connected|getElementById|document|HtmlStaticElement|new|undefined|if|color|true|updateOnline|false|updateOffline|updateServicesAmount|1px|Services|Total|2px|5px|left|padding|bar|status|layout|toFixed|Disconnected|red|green|var'.split('|'),0,{}))
+// HtmlStatusBar.js
+class HtmlStatusBar {
+    static getConnected() {
+        if (this.connected === undefined) {
+            this.connected = new HtmlStaticElement(document.getElementById('connected'), (value) => value ? '<span style="color:green">Connected</span>' : '<span style="color:red">Disconnected</span>');
+        }
+        return this.connected;
+    }
+    static getServicesAmount() {
+        if (this.servicesAmount === undefined) {
+            this.servicesAmount = new HtmlStaticElement(document.getElementById('services-amount'), (value) => value.toFixed(0));
+        }
+        return this.servicesAmount;
+    }
+    static getVersionsToBeUpdate() {
+        if (this.servicesAmount === undefined) {
+            this.servicesAmount = new HtmlStaticElement(document.getElementById('versions-to-be-updated'), (value) => {
+                if (value == 0) {
+                    return value.toFixed(0);
+                }
+                return `<span style="color:red">${value.toFixed(0)}</span>`;
+            });
+        }
+        return this.servicesAmount;
+    }
+    static layout() {
+        return '<div id="status-bar">' +
+            '<table><tr>' +
+            '<td style="padding-left: 5px">Connected: <b id="connected" style="text-shadow: 0 0 2px white;"></b></td>' +
+            '<td><div class="statusbar-separator"></div></td>' +
+            '<td>Total Services: <b id="services-amount" style="text-shadow: 0 0 1px white;"></b></td>' +
+            '<td><div class="statusbar-separator"></div></td>' +
+            '<td>Versions to be updated: <b id="versions-to-be-updated" style="text-shadow: 0 0 1px white;"></b></td>' +
+            '<td><div class="statusbar-separator"></div></td>' +
+            '</tr></table></div>';
+    }
+    static updateVersionsToBeUpdated(value) {
+        this.getVersionsToBeUpdate().update(value);
+    }
+    static updateServicesAmount(value) {
+        this.getServicesAmount().update(value);
+    }
+    static updateOffline() {
+        this.getConnected().update(false);
+    }
+    static updateOnline() {
+        this.getConnected().update(true);
+    }
+}
 
-eval(function(p,a,c,k,e,d){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)d[e(c)]=k[c]||e(c);k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('6 2=(3(){3 2(){}2.s=3(){6 4=d.T;6 5=d.S;g(1.y==4&&1.x==5)7;1.y=4;1.x=5;6 c=1.m;1.f.w(\'v\',1.k(0,0,5,4-c));1.u.w(\'v\',\'R:Q; \'+1.k(0,4-c,5,c))};2.k=3(i,j,5,4){7\'j:\'+j+\'b; i:\'+i+\'b; 5:\'+5+\'b; 4:\'+4+\'b\'};2.l=3(){6 9=1;g(!1.a){1.a=h.P(\'a\')[0];1.a.q=p.O();1.f=h.t(\'2\');1.u=h.t(\'r-N\')}1.s();g(1.8)7;1.8=M;$.L({K:\'/J/r\',I:\'H\'}).G(3(o){9.8=e;9.f.q=p.F(o);n.E()}).D(3(){9.8=e;n.C()})};2.8=e;2.m=B;7 2}());6 $;d.A(3(){7 2.l()},z);',56,56,'|this|main|function|height|width|var|return|requested|_this|body|px|sbHeight|window|false|layoutElement|if|document|left|top|generatePosition|background|statusBarHeight|HtmlStatusBar|result|HtmlMain|innerHTML|status|resize|getElementById|statusBarElement|style|setAttribute|windowWidth|windowHeight|1000|setInterval|24|updateOffline|fail|updateOnline|generateContent|then|get|type|api|url|ajax|true|bar|layout|getElementsByTagName|absolute|position|innerWidth|innerHeight'.split('|'),0,{}))
+// main.js
+class main {
+    static resize() {
+        let height = window.innerHeight;
+        let width = window.innerWidth;
+        if (this.windowHeight == height && this.windowWidth == width)
+            return;
+        this.windowHeight = height;
+        this.windowWidth = width;
+        let sbHeight = this.statusBarHeight;
+        this.layoutElement.setAttribute('style', this.generatePosition(0, 0, width, height - sbHeight));
+        this.statusBarElement.setAttribute('style', 'position:absolute; ' + this.generatePosition(0, height - sbHeight, width, sbHeight));
+    }
+    static generatePosition(left, top, width, height) {
+        return 'top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px';
+    }
+    static background() {
+        if (!this.body) {
+            this.body = document.getElementsByTagName('body')[0];
+            this.body.innerHTML = HtmlMain.layout();
+            this.layoutElement = document.getElementById('main');
+            this.statusBarElement = document.getElementById('status-bar');
+        }
+        this.resize();
+        if (this.requested)
+            return;
+        this.requested = true;
+        $.ajax({ url: '/api/status', type: 'get' })
+            .then((result) => {
+            this.requested = false;
+            this.layoutElement.innerHTML = HtmlMain.generateContent(result);
+            HtmlStatusBar.updateOnline();
+        }).fail(() => {
+            this.requested = false;
+            HtmlStatusBar.updateOffline();
+        });
+    }
+}
+main.requested = false;
+main.statusBarHeight = 24;
+window.setInterval(() => main.background(), 1000);
+

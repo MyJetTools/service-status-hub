@@ -1,22 +1,19 @@
-var main = /** @class */ (function () {
-    function main() {
-    }
-    main.resize = function () {
-        var height = window.innerHeight;
-        var width = window.innerWidth;
+class main {
+    static resize() {
+        let height = window.innerHeight;
+        let width = window.innerWidth;
         if (this.windowHeight == height && this.windowWidth == width)
             return;
         this.windowHeight = height;
         this.windowWidth = width;
-        var sbHeight = this.statusBarHeight;
+        let sbHeight = this.statusBarHeight;
         this.layoutElement.setAttribute('style', this.generatePosition(0, 0, width, height - sbHeight));
         this.statusBarElement.setAttribute('style', 'position:absolute; ' + this.generatePosition(0, height - sbHeight, width, sbHeight));
-    };
-    main.generatePosition = function (left, top, width, height) {
+    }
+    static generatePosition(left, top, width, height) {
         return 'top:' + top + 'px; left:' + left + 'px; width:' + width + 'px; height:' + height + 'px';
-    };
-    main.background = function () {
-        var _this = this;
+    }
+    static background() {
         if (!this.body) {
             this.body = document.getElementsByTagName('body')[0];
             this.body.innerHTML = HtmlMain.layout();
@@ -28,19 +25,17 @@ var main = /** @class */ (function () {
             return;
         this.requested = true;
         $.ajax({ url: '/api/status', type: 'get' })
-            .then(function (result) {
-            _this.requested = false;
-            _this.layoutElement.innerHTML = HtmlMain.generateContent(result);
+            .then((result) => {
+            this.requested = false;
+            this.layoutElement.innerHTML = HtmlMain.generateContent(result);
             HtmlStatusBar.updateOnline();
-        }).fail(function () {
-            _this.requested = false;
+        }).fail(() => {
+            this.requested = false;
             HtmlStatusBar.updateOffline();
         });
-    };
-    main.requested = false;
-    main.statusBarHeight = 24;
-    return main;
-}());
-var $;
-window.setInterval(function () { return main.background(); }, 1000);
+    }
+}
+main.requested = false;
+main.statusBarHeight = 24;
+window.setInterval(() => main.background(), 1000);
 //# sourceMappingURL=main.js.map

@@ -1,3 +1,5 @@
+declare const $;
+
 interface IStatusContract {
     ok: object;
     err: object;

@@ -76,6 +76,4 @@ class main {
     }
 }
 
-let $: any;
-
 window.setInterval(() => main.background(), 1000);

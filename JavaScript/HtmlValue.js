@@ -10,4 +10,4 @@ class HtmlStaticElement {
         }
     }
 }
-//# sourceMappingURL=HtmlStaticElement.js.map
+//# sourceMappingURL=HtmlValue.js.map
