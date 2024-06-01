@@ -23,8 +23,8 @@ class HtmlStatusBar {
     }
 
     static getVersionsToBeUpdate(): HtmlStaticElement<number> {
-        if (this.servicesAmount === undefined) {
-            this.servicesAmount = new HtmlStaticElement<number>(document.getElementById('versions-to-be-updated'), (value) => {
+        if (this.versionsToBeUpdated === undefined) {
+            this.versionsToBeUpdated = new HtmlStaticElement<number>(document.getElementById('versions-to-be-updated'), (value) => {
                 if (value == 0) {
                     return value.toFixed(0);
                 }
@@ -33,7 +33,7 @@ class HtmlStatusBar {
             });
         }
 
-        return this.servicesAmount;
+        return this.versionsToBeUpdated;
     }
 
 
