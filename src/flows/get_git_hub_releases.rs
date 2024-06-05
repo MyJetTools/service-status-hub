@@ -13,12 +13,22 @@ pub async fn get_git_hub_releases(app: &AppContext) -> ServicesStatusResponse {
         read_access.clone()
     };
 
-    let settings = app.settings_reader.git_hub_versions_url().await;
+    let get_hub_versions_url = app.settings_reader.git_hub_versions_url().await;
 
-    let versions_response = FlUrl::new(settings.as_str()).get().await;
+    if get_hub_versions_url.is_none() {
+        return response;
+    }
+
+    let get_hub_versions_url = get_hub_versions_url.unwrap();
+
+    let versions_response = FlUrl::new(get_hub_versions_url.as_str()).get().await;
 
     if let Err(err) = &versions_response {
-        println!("Can not read from {} : Err: {:?}", settings.as_str(), err);
+        println!(
+            "Can not read from {} : Err: {:?}",
+            get_hub_versions_url.as_str(),
+            err
+        );
         return response;
     }
 

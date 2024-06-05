@@ -6,7 +6,7 @@ pub struct SettingsModel {
     #[serde(rename = "Services")]
     pub services: Vec<ServiceSettings>,
 
-    pub git_hub_versions_url: String,
+    pub git_hub_versions_url: Option<String>,
 
     #[serde(rename = "CertFileName")]
     pub cert_file_name: Option<String>,
@@ -15,9 +15,11 @@ pub struct SettingsModel {
 }
 
 impl SettingsReader {
-    pub async fn git_hub_versions_url(&self) -> ShortString {
+    pub async fn git_hub_versions_url(&self) -> Option<ShortString> {
         let read_access = self.settings.read().await;
-        ShortString::from_str(&read_access.git_hub_versions_url).unwrap()
+
+        let result = read_access.git_hub_versions_url.as_ref()?;
+        Some(ShortString::from_str(result).unwrap())
     }
 }
 
