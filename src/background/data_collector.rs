@@ -36,7 +36,7 @@ impl MyTimerTick for DataCollector {
 
             let mut fl_url = flurl::FlUrl::new(settings.url.as_str());
 
-            if settings.use_certificate {
+            if settings.use_certificate() {
                 fl_url = fl_url
                     .with_client_certificate(self.app.client_certificate.as_ref().unwrap().clone());
             }

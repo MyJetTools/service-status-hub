@@ -28,5 +28,11 @@ pub struct ServiceSettings {
     pub env: String,
     pub url: String,
     #[serde(rename = "UseCertificate")]
-    pub use_certificate: bool,
+    pub use_certificate: Option<bool>,
+}
+
+impl ServiceSettings {
+    pub fn use_certificate(&self) -> bool {
+        self.use_certificate.unwrap_or(false)
+    }
 }
