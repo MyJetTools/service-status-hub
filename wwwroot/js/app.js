@@ -17,7 +17,7 @@ class HtmlMain {
     static layout() {
         return '<div id="main"></div>' +
             HtmlStatusBar.layout() +
-            `<div id="header"><input class="form-control" style="width:400px" oninput="AppContext.onFilterChange(this)"/></div>`;
+            `<div id="header"><table><tr><td><input class="form-control" style="width:400px" oninput="AppContext.onFilterChange(this)"/></td><td><input type="checkbox"  oninput="AppContext.onCheckboxClick(this)"/>Show only different</td></tr></table></div>`;
     }
     static generateContent(status) {
         let prevId = "";
@@ -177,11 +177,14 @@ class HtmlStatusBar {
 // main.js
 class AppContext {
     static filterIsDisabled() {
-        return this.filterString == "";
+        return this.filterString == "" && !this.checkedDifferent;
     }
     static showItem(item) {
         if (this.filterIsDisabled()) {
             return true;
+        }
+        if (this.checkedDifferent) {
+            return item.version != item.git_hub_version;
         }
         if (item.id.toLocaleLowerCase().includes(this.filterString)) {
             return true;
@@ -190,6 +193,9 @@ class AppContext {
     }
     static onFilterChange(element) {
         AppContext.filterString = element.value.toLowerCase();
+    }
+    static onCheckboxClick(element) {
+        AppContext.checkedDifferent = element.checked;
     }
     static resize() {
         let height = window.innerHeight;
@@ -228,6 +234,7 @@ class AppContext {
     }
 }
 AppContext.filterString = "";
+AppContext.checkedDifferent = false;
 AppContext.requested = false;
 AppContext.statusBarHeight = 24;
 window.setInterval(() => AppContext.background(), 1000);

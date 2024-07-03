@@ -2,7 +2,7 @@ class HtmlMain {
     public static layout(): string {
         return '<div id="main"></div>' +
             HtmlStatusBar.layout() +
-            `<div id="header"><input class="form-control" style="width:400px" oninput="AppContext.onFilterChange(this)"/></div>`;
+            `<div id="header"><table><tr><td><input class="form-control" style="width:400px" oninput="AppContext.onFilterChange(this)"/></td><td><input type="checkbox"  oninput="AppContext.onCheckboxClick(this)"/>Show only different</td></tr></table></div>`;
     }
 
 

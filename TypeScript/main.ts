@@ -2,6 +2,8 @@ class AppContext {
 
     public static filterString = "";
 
+    public static checkedDifferent = false;
+
     private static body: HTMLElement;
     private static layoutElement: HTMLElement;
     private static statusBarElement: HTMLElement;
@@ -16,13 +18,17 @@ class AppContext {
 
 
     static filterIsDisabled(): boolean {
-        return this.filterString == "";
+        return this.filterString == "" && !this.checkedDifferent;
     }
 
     static showItem(item: IServiceStatus): boolean {
 
         if (this.filterIsDisabled()) {
             return true;
+        }
+
+        if (this.checkedDifferent) {
+            return item.version != item.git_hub_version;
         }
 
         if (item.id.toLocaleLowerCase().includes(this.filterString)) {
@@ -35,6 +41,10 @@ class AppContext {
 
     static onFilterChange(element: HTMLInputElement) {
         AppContext.filterString = element.value.toLowerCase();
+    }
+
+    static onCheckboxClick(element: HTMLInputElement) {
+        AppContext.checkedDifferent = element.checked;
     }
 
 
