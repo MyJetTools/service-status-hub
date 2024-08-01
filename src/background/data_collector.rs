@@ -34,12 +34,9 @@ impl MyTimerTick for DataCollector {
             let mut sw = StopWatch::new();
             sw.start();
 
-            let mut fl_url = flurl::FlUrl::new(settings.url.as_str());
-
-            if settings.use_certificate() {
-                fl_url = fl_url
-                    .with_client_certificate(self.app.client_certificate.as_ref().unwrap().clone());
-            }
+            let fl_url = settings
+                .get_fl_url(&self.app, settings_model.ssh_credentials.as_ref())
+                .await;
 
             let result = fl_url.get().await;
 

@@ -1,4 +1,4 @@
-use flurl::my_tls::ClientCertificate;
+use flurl::{my_ssh::SshSessionsPool, my_tls::ClientCertificate};
 use rust_extensions::AppStates;
 use tokio::sync::Mutex;
 
@@ -14,6 +14,7 @@ pub struct AppContext {
     pub process_id: String,
     pub client_certificate: Option<ClientCertificate>,
     pub response: Mutex<ServicesStatusResponse>,
+    pub ssh_sessions_pool: Arc<SshSessionsPool>,
 }
 
 impl AppContext {
@@ -40,6 +41,7 @@ impl AppContext {
             settings_reader,
             process_id: uuid::Uuid::new_v4().to_string(),
             client_certificate,
+            ssh_sessions_pool: Arc::new(SshSessionsPool::new()),
             response: Mutex::new(ServicesStatusResponse {
                 ok: BTreeMap::new(),
                 err: BTreeMap::new(),

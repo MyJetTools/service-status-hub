@@ -6,18 +6,20 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-my-http-server = { tag = "0.7.0", git = "https://github.com/MyJetTools/my-http-server.git", features = [
+my-http-server = { tag = "0.7.1", git = "https://github.com/MyJetTools/my-http-server.git", features = [
     "macros",
     "controllers",
     "static-files",
 ] }
 
-my-settings-reader = { tag = "0.3.1", git = "https://github.com/MyJetTools/my-settings-reader.git", features = [
+my-settings-reader = { tag = "0.3.2", git = "https://github.com/MyJetTools/my-settings-reader.git", features = [
     "background-reader",
 ] }
 
 rust-extensions = { tag = "0.1.4", git = "https://github.com/MyJetTools/rust-extensions.git" }
-flurl = { git = "https://github.com/MyJetTools/fl-url.git", tag = "0.5.2" }
+flurl = { git = "https://github.com/MyJetTools/fl-url.git", tag = "0.5.3", features = [
+    "with-ssh",
+] }
 my-logger = { tag = "1.1.0", git = "https://github.com/MyJetTools/my-logger.git" }
 
 tokio = { version = "*", features = ["full"] }
@@ -33,4 +35,4 @@ async-trait = "*"
 uuid = { version = "*", features = ["serde", "v4"] }
 
 [build-dependencies]
-ci-utils = { git = "https://github.com/MyJetTools/ci-utils.git", tag = "0.1.0" }
+ci-utils = { git = "https://github.com/MyJetTools/ci-utils.git", tag = "0.1.1" }
